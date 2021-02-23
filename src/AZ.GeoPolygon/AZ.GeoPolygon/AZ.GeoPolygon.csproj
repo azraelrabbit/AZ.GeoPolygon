@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>azraelrabbit</Authors>
+    <Company>azraelrabbit</Company>
+  </PropertyGroup>
+
+</Project>
