@@ -9,27 +9,30 @@ namespace AZ.GeoPolygon
 
     public class AZPolygon : IAZPolygon
     {
-        private readonly List<AZGeoPoint> _points;
+        //private readonly List<AZGeoPoint> _points;
+
+        private AZGeoPoint[] _pointsWithClosure;
 
         public AZPolygon(List<AZGeoPoint> points)
         {
-            _points = points;
+            //_points = points;
+            _pointsWithClosure = PolygonPointsWithClosure(points);
         }
 
         ~AZPolygon()
         {
-            _points.Clear();
+            _pointsWithClosure = null;
         }
 
         public bool Contains(AZGeoPoint location)
         {
-            AZGeoPoint[] polygonPointsWithClosure = PolygonPointsWithClosure();
+            //AZGeoPoint[] polygonPointsWithClosure = PolygonPointsWithClosure();
 
             int windingNumber = 0;
 
-            for (int pointIndex = 0; pointIndex < polygonPointsWithClosure.Length - 1; pointIndex++)
+            for (int pointIndex = 0; pointIndex < _pointsWithClosure.Length - 1; pointIndex++)
             {
-                AZEdge edge = new AZEdge(polygonPointsWithClosure[pointIndex], polygonPointsWithClosure[pointIndex + 1]);
+                AZEdge edge = new AZEdge(_pointsWithClosure[pointIndex], _pointsWithClosure[pointIndex + 1]);
                 windingNumber += AscendingIntersection(location, edge);
                 windingNumber -= DescendingIntersection(location, edge);
             }
@@ -37,13 +40,27 @@ namespace AZ.GeoPolygon
             return windingNumber != 0;
         }
 
-        private AZGeoPoint[] PolygonPointsWithClosure()
+        private AZGeoPoint[] PolygonPointsWithClosure(List<AZGeoPoint> points)
         {
             // _points should remain immutable, thus creation of a closed point set (starting point repeated)
-            return new List<AZGeoPoint>(_points)
-        {
-            new AZGeoPoint(_points[0].Lat, _points[0].Lon)
-        }.ToArray();
+            //    return new List<AZGeoPoint>(_points)
+            //{
+            //    new AZGeoPoint(_points[0].Lat, _points[0].Lon)
+            //}.ToArray();
+
+            var start = points[0];
+            var end = points[points.Count - 1];
+
+            var ret = new List<AZGeoPoint>(points);
+
+            // should remain immutable, thus creation of a closed point set (starting point repeated)
+            if (start.Lat != end.Lat || start.Lon != end.Lon)
+            {
+                ret.Add(new AZGeoPoint(start.Lat, start.Lon));
+            }
+            
+            return ret.ToArray();
+
         }
 
         private static int AscendingIntersection(AZGeoPoint location, AZEdge edge)
@@ -120,6 +137,6 @@ namespace AZ.GeoPolygon
             Ascending,
             Descending
         }
- 
+
     }
 }
