@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.1</TargetFrameworks>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</RepositoryUrl>
@@ -9,11 +9,12 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>azraelrabbit</Authors>
     <Company>azraelrabbit</Company>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
+    <Description>change AZGeoPoint to struct and use Memory&lt;T&gt;</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="AZGeoPointr.cs" />
+    <Compile Remove="AZGeoPoint.cs" />
   </ItemGroup>
 
 </Project>

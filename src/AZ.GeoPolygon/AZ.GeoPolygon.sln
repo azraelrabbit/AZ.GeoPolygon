@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AZ.GeoPolygon", "AZ.GeoPolygon\AZ.GeoPolygon.csproj", "{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygon", "AZ.GeoPolygon\AZ.GeoPolygon.csproj", "{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygon.core", "AZ.GeoPolygon\AZ.GeoPolygon.core.csproj", "{96080447-712F-4F40-B408-59BDAECC3056}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96080447-712F-4F40-B408-59BDAECC3056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96080447-712F-4F40-B408-59BDAECC3056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96080447-712F-4F40-B408-59BDAECC3056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96080447-712F-4F40-B408-59BDAECC3056}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

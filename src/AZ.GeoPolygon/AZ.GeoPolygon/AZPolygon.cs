@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace AZ.GeoPolygon
 {
@@ -13,10 +15,16 @@ namespace AZ.GeoPolygon
 
         private AZGeoPoint[] _pointsWithClosure;
 
+
+        //private Memory<AZGeoPoint> _pointsWithClosure;
+
         public AZPolygon(List<AZGeoPoint> points)
         {
             //_points = points;
             _pointsWithClosure = PolygonPointsWithClosure(points);
+
+            //_pointsWithClosure = new Memory<AZGeoPoint>(PolygonPointsWithClosure(points));
+
         }
 
         ~AZPolygon()
@@ -32,8 +40,10 @@ namespace AZ.GeoPolygon
 
             for (int pointIndex = 0; pointIndex < _pointsWithClosure.Length - 1; pointIndex++)
             {
+                //AZEdge edge = new AZEdge(_pointsWithClosure.Span[pointIndex], _pointsWithClosure.Span[pointIndex + 1]);
                 AZEdge edge = new AZEdge(_pointsWithClosure[pointIndex], _pointsWithClosure[pointIndex + 1]);
                 windingNumber += AscendingIntersection(location, edge);
+                
                 windingNumber -= DescendingIntersection(location, edge);
             }
 
