@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygon", "AZ.GeoPolygon\AZ.GeoPolygon.csproj", "{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygonOld", "AZ.GeoPolygon\AZ.GeoPolygonOld.csproj", "{9C3D21A7-8ECF-4594-8253-0BF05977D0DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygon.core", "AZ.GeoPolygon\AZ.GeoPolygon.core.csproj", "{96080447-712F-4F40-B408-59BDAECC3056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AZ.GeoPolygon", "AZ.GeoPolygon\AZ.GeoPolygon.csproj", "{96080447-712F-4F40-B408-59BDAECC3056}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace AZ.GeoPolygon
@@ -13,7 +15,7 @@ namespace AZ.GeoPolygon
     {
         //private readonly List<AZGeoPoint> _points;
 
-        private AZGeoPoint[] _pointsWithClosure;
+        private List<AZGeoPoint> _pointsWithClosure;
 
 
         //private Memory<AZGeoPoint> _pointsWithClosure;
@@ -21,7 +23,7 @@ namespace AZ.GeoPolygon
         public AZPolygon(List<AZGeoPoint> points)
         {
             //_points = points;
-            _pointsWithClosure = PolygonPointsWithClosure(points);
+            _pointsWithClosure =PolygonPointsWithClosure(points);
 
             //_pointsWithClosure = new Memory<AZGeoPoint>(PolygonPointsWithClosure(points));
 
@@ -29,6 +31,7 @@ namespace AZ.GeoPolygon
 
         ~AZPolygon()
         {
+            _pointsWithClosure.Clear();
             _pointsWithClosure = null;
         }
 
@@ -38,10 +41,16 @@ namespace AZ.GeoPolygon
 
             int windingNumber = 0;
 
-            for (int pointIndex = 0; pointIndex < _pointsWithClosure.Length - 1; pointIndex++)
+            int len = _pointsWithClosure.Count - 1;
+
+            var _pSpan = CollectionsMarshal.AsSpan<AZGeoPoint>(_pointsWithClosure);
+            
+            
+            for (int pointIndex = 0; pointIndex < len; pointIndex++)
             {
                 //AZEdge edge = new AZEdge(_pointsWithClosure.Span[pointIndex], _pointsWithClosure.Span[pointIndex + 1]);
-                AZEdge edge = new AZEdge(_pointsWithClosure[pointIndex], _pointsWithClosure[pointIndex + 1]);
+                
+                AZEdge edge = new AZEdge(_pSpan[pointIndex], _pSpan[pointIndex + 1]);
                 windingNumber += AscendingIntersection(location, edge);
                 
                 windingNumber -= DescendingIntersection(location, edge);
@@ -50,7 +59,29 @@ namespace AZ.GeoPolygon
             return windingNumber != 0;
         }
 
-        private AZGeoPoint[] PolygonPointsWithClosure(List<AZGeoPoint> points)
+        //private AZGeoPoint[] PolygonPointsWithClosure(List<AZGeoPoint> points)
+        //{
+        //    // _points should remain immutable, thus creation of a closed point set (starting point repeated)
+        //    //    return new List<AZGeoPoint>(_points)
+        //    //{
+        //    //    new AZGeoPoint(_points[0].Lat, _points[0].Lon)
+        //    //}.ToArray();
+
+        //    var start = points[0];
+        //    var end = points[points.Count - 1];
+
+        //    var ret = new List<AZGeoPoint>(points);
+
+        //    // should remain immutable, thus creation of a closed point set (starting point repeated)
+        //    if (start.Lat != end.Lat || start.Lon != end.Lon)
+        //    {
+        //        ret.Add(new AZGeoPoint(start.Lat, start.Lon));
+        //    }
+            
+        //    return ret.ToArray();
+
+        //}
+        private List<AZGeoPoint> PolygonPointsWithClosure(List<AZGeoPoint> points)
         {
             // _points should remain immutable, thus creation of a closed point set (starting point repeated)
             //    return new List<AZGeoPoint>(_points)
@@ -68,8 +99,8 @@ namespace AZ.GeoPolygon
             {
                 ret.Add(new AZGeoPoint(start.Lat, start.Lon));
             }
-            
-            return ret.ToArray();
+
+            return ret;
 
         }
 
