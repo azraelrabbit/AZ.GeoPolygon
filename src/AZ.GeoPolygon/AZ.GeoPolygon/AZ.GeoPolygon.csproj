@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard2.1</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/azraelrabbit/AZ.GeoPolygon.git</RepositoryUrl>
@@ -9,7 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>azraelrabbit</Authors>
     <Company>azraelrabbit</Company>
-    <Version>1.0.2</Version>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
