@@ -1,6 +1,6 @@
 ﻿namespace AZ.GeoPolygon
 {
-    public struct AZGeoPoint
+    public   struct AZGeoPoint
     {
         public double Lon { get; set; }
 
