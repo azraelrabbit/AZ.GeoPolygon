@@ -45,7 +45,7 @@ namespace AZ.GeoPolygon
             }
         }
 
-        private bool IsPointInsideBoundingBox(AZGeoPoint point)
+        public bool IsPointInsideBoundingBox(AZGeoPoint point)
         {
             return point.Lon >= minX && point.Lon <= maxX && point.Lat >= minY && point.Lat <= maxY;
         }
@@ -70,18 +70,12 @@ namespace AZ.GeoPolygon
 
             int len = _pointsWithClosure.Count - 1;
 
+            int wnp1 = 0, wnp2 = 0, wnp3 = 0, wnp4 = 0;
+
+            int wnn1 = 0, wnn2 = 0, wnn3 = 0, wnn4 = 0;
+
             var _pSpan = CollectionsMarshal.AsSpan<AZGeoPoint>(_pointsWithClosure);
-
-
-            //for (int pointIndex = 0; pointIndex < len; pointIndex++)
-            //{
-            //    //AZEdge edge = new AZEdge(_pointsWithClosure.Span[pointIndex], _pointsWithClosure.Span[pointIndex + 1]);
-
-            //    AZEdge edge = new AZEdge(_pSpan[pointIndex], _pSpan[pointIndex + 1]);
-            //    windingNumber += AscendingIntersection(location, edge);
-
-            //    windingNumber -= DescendingIntersection(location, edge);
-            //}
+ 
             // do Performance optimization
             for (int pointIndex = 0; pointIndex < len; pointIndex += 4)
             {
@@ -90,48 +84,48 @@ namespace AZ.GeoPolygon
                 if (pointIndex + 4 < len)
                 {
                     AZEdge edge = new AZEdge(_pSpan[pointIndex], _pSpan[pointIndex + 1]);
-                    windingNumber += AscendingIntersection(location, edge);
-                    windingNumber -= DescendingIntersection(location, edge);
+                    wnp1 += AscendingIntersection(location, edge);
+                    wnn1 -= DescendingIntersection(location, edge);
 
                     AZEdge edge1 = new AZEdge(_pSpan[pointIndex + 1], _pSpan[pointIndex + 1 + 1]);
-                    windingNumber += AscendingIntersection(location, edge1);
-                    windingNumber -= DescendingIntersection(location, edge1);
+                    wnp2 += AscendingIntersection(location, edge1);
+                    wnn2 -= DescendingIntersection(location, edge1);
 
                     AZEdge edge2 = new AZEdge(_pSpan[pointIndex + 2], _pSpan[pointIndex + 2 + 1]);
-                    windingNumber += AscendingIntersection(location, edge2);
-                    windingNumber -= DescendingIntersection(location, edge2);
+                    wnp3 += AscendingIntersection(location, edge2);
+                    wnn3 -= DescendingIntersection(location, edge2);
 
                     AZEdge edge3 = new AZEdge(_pSpan[pointIndex + 3], _pSpan[pointIndex + 3 + 1]);
-                    windingNumber += AscendingIntersection(location, edge3);
-                    windingNumber -= DescendingIntersection(location, edge3);
+                    wnp4 += AscendingIntersection(location, edge3);
+                    wnn4 -= DescendingIntersection(location, edge3);
                 }
                 else
                 {
                     AZEdge edge = new AZEdge(_pSpan[pointIndex], _pSpan[pointIndex + 1]);
-                    windingNumber += AscendingIntersection(location, edge);
-                    windingNumber -= DescendingIntersection(location, edge);
+                    wnp1 += AscendingIntersection(location, edge);
+                    wnn1 -= DescendingIntersection(location, edge);
 
                     if (pointIndex + 1 < len)
                     {
                         AZEdge edge1 = new AZEdge(_pSpan[pointIndex + 1], _pSpan[pointIndex + 1 + 1]);
-                        windingNumber += AscendingIntersection(location, edge1);
-                        windingNumber -= DescendingIntersection(location, edge1);
+                        wnp2 += AscendingIntersection(location, edge1);
+                        wnn2 -= DescendingIntersection(location, edge1);
                     }
                     if (pointIndex + 2 < len)
                     {
                         AZEdge edge2 = new AZEdge(_pSpan[pointIndex + 2], _pSpan[pointIndex + 2 + 1]);
-                        windingNumber += AscendingIntersection(location, edge2);
-                        windingNumber -= DescendingIntersection(location, edge2);
+                        wnp3 += AscendingIntersection(location, edge2);
+                        wnn3 -= DescendingIntersection(location, edge2);
                     }
                     if (pointIndex + 3 < len)
                     {
                         AZEdge edge3 = new AZEdge(_pSpan[pointIndex + 3], _pSpan[pointIndex + 3 + 1]);
-                        windingNumber += AscendingIntersection(location, edge3);
-                        windingNumber -= DescendingIntersection(location, edge3);
+                        wnp4 += AscendingIntersection(location, edge3);
+                        wnn4 -= DescendingIntersection(location, edge3);
                     }
                 }
             }
-
+            windingNumber = wnp1 + wnp2 + wnp3 + wnp4 + wnn1 + wnn2 + wnn3 + wnn4;
             return windingNumber != 0;
         }
 
