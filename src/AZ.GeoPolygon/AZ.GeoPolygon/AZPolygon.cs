@@ -10,7 +10,7 @@ namespace AZ.GeoPolygon
 {
     public interface IAZPolygon
     {
-        bool Contains(AZGeoPoint location);
+        bool Contains(AZGeoPoint location, bool tryBox = true);
     }
 
     public class AZPolygon : IAZPolygon
@@ -58,13 +58,16 @@ namespace AZ.GeoPolygon
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveOptimization)]
-        public bool Contains(AZGeoPoint location)
+        public bool Contains(AZGeoPoint location, bool tryBox = true)
         {
             //AZGeoPoint[] polygonPointsWithClosure = PolygonPointsWithClosure();
 
-            //first check the location does inside the polygon bound(rect),to improve performance
-            if (!IsPointInsideBoundingBox(location))
-                return false;
+            if (tryBox)
+            {
+                //first check the location does inside the polygon bound(rect),to improve performance
+                if (!IsPointInsideBoundingBox(location))
+                    return false;
+            }
 
             int windingNumber = 0;
 
@@ -129,13 +132,17 @@ namespace AZ.GeoPolygon
             return windingNumber != 0;
         }
 
-        public bool ContainsSlow(AZGeoPoint location)
+        public bool ContainsSlow(AZGeoPoint location,bool tryBox=true)
         {
             //AZGeoPoint[] polygonPointsWithClosure = PolygonPointsWithClosure();
 
-            //first check the location does inside the polygon rectangular bounds,to improve performance
-            if (!IsPointInsideBoundingBox(location))
-                return false;
+            if (tryBox)
+            {
+                //first check the location does inside the polygon rectangular bounds,to improve performance
+                if (!IsPointInsideBoundingBox(location))
+                    return false;
+
+            }
 
             int windingNumber = 0;
 
